@@ -54,7 +54,3 @@ Si toutefois vous souhaitez qu'il ne se lance plus, supprimer le fichier. Si vou
 ![Drag Racing](./wintobashpath/images/Free%20Automated%20Malware%20Analysis%20Service.png)
 
 Pour les plus suspicieux, vous pouvez build le programme en Go.
-
-```
-
-```
