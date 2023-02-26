@@ -1,1 +1,1 @@
-go build -o ./bin/ .  && upx --best --lzma ./bin/wintobashpath.exe
+go build -o ./bin/ . # && upx --best --lzma ./bin/wintobashpath.exe
