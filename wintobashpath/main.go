@@ -12,28 +12,58 @@ import (
 //go:embed bashrc
 var bashrc []byte
 
+/*
+*
+* This program transform PATH of Windows into
+* a PATH for Linux or bashrc.
+* Configure bashrc and /.bashrc.d/winToBashPath.bashrc file.
+*
+ */
 func main() {
 	var winPathList []string
 	path := os.Getenv("PATH")
 	splitedPath := strings.Split(path, ";")
+	/*
+	*	Split current Windows path
+	 */
 	for _, p := range splitedPath {
+		/*
+		* Change slash in path
+		 */
 		pathSlach := filepath.ToSlash(p)
-
 		winPathList = append(winPathList, fmt.Sprintf("%q", renameDrive(pathSlach)))
 	}
 
+	/*
+	* change new path with ":" instead ";" for Windows
+	 */
 	bashrcPath := strings.Join(winPathList, ":")
 	userProfile := os.Getenv("USERPROFILE")
 
+	/*
+	* Create /.bashrc.d folder if not exist
+	 */
 	if !exists(userProfile + "/.bashrc.d") {
 		createBashrcDir(userProfile + "/.bashrc.d")
 	}
 
+	/*
+	*	Write file bashrc with PATH to export in /.bashrc.d/winToBashPath.bashrc
+	 */
 	os.WriteFile(userProfile+"/.bashrc.d/winToBashPath.bashrc", []byte("export PATH=$PATH:"+bashrcPath), 0700)
 
+	/*
+	* Check if .bashrc file exist
+	 */
 	if !exists(userProfile + "/.bashrc") {
+		/*
+		* If not exist .bashrc is created
+		 */
 		os.WriteFile(userProfile+"/.bashrc", bashrc, 0700)
 	} else {
+		/*
+		* If exist append source at the end
+		 */
 		readBashRc, _ := os.ReadFile(userProfile + "/.bashrc")
 		if !strings.Contains(string(readBashRc), "winToBashPath") {
 			f, err := os.OpenFile(userProfile+"/.bashrc",
@@ -48,10 +78,9 @@ func main() {
 	}
 }
 
-func spaceEscaped(s string) string {
-	return strings.Replace(s, " ", "\\ ", -1)
-}
-
+/*
+* rename driver name . Exemple: "C:" to "/c/"
+ */
 func renameDrive(path string) string {
 	var drive string = strings.Split(path, ":")[0]
 	path = strings.Replace(path, drive+":", "/"+strings.ToLower(drive), 1)
