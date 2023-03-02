@@ -21,7 +21,7 @@ Ce programme permet de faire passer la variable `PATH`de Windows vers Bash.
 
 # Utilisation
 
-Executez le fichier `./wintobashpath/bin/wintobashpath.exe` (téléchargable [ici](./wintobashpath/bin/wintobashpath.exe)) ou mettez le dans le répertoire "startup" de Windows pour qu'il s'execute a chaque démarrage.
+Executez le fichier `./wintobashpath/bin/wintobashpath.exe` (téléchargable [ici](https://github.com/hypolas/wintobashpath/releases)) ou mettez le dans le répertoire "startup" de Windows pour qu'il s'execute a chaque démarrage.
 
 La variable `PATH` sera prise en compte au redémarrage de votre terminal bash.
 
